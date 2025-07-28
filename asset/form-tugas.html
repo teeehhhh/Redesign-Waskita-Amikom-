@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Tugas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #f8f8f8;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: #4b0082;
+      color: #fff;
+      width: 230px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar img.logo {
+      width: 60px;
+      margin-bottom: 30px;
+    }
+
+    .sidebar nav a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 15px;
+      padding-left: 10px;
+      border-left: 4px solid transparent;
+      transition: 0.3s;
+    }
+
+    .sidebar nav a.active,
+    .sidebar nav a:hover {
+      border-left: 4px solid orange;
+    }
+
+    .sidebar .bottom-links a {
+      font-size: 14px;
+      display: block;
+      margin-top: 15px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .sidebar .bottom-links a.logout {
+      color: red;
+    }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #eaeaea;
+    }
+
+    .topbar {
+      background: #fff;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .topbar h2 {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-profile img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .card h3 {
+      text-align: center;
+      margin-bottom: 25px;
+      background: #ddd;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .card ul {
+      list-style: none;
+    }
+
+    .card ul li {
+      background: #f3f3f3;
+      margin: 12px 0;
+      padding: 12px 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+    }
+
+    .card ul li img {
+      width: 20px;
+    }
+
+    .footer {
+      background: #fff;
+      padding: 20px 30px;
+      border-top: 1px solid #ddd;
+    }
+
+    .footer .info {
+      margin-bottom: 15px;
+    }
+
+    .footer .info a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .footer .social-icons img {
+      width: 22px;
+      margin-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .main {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div>
+        <img src="Logo Amikom.png" alt="Logo" class="logo" />
+        <nav>
+          <a href="dashboard.html"><img src="" alt="">Dashboard</a>
+          <a href="#">Site Home</a>
+          <a href="#">Calender</a>
+          <a href="#">My Courses</a>
+          <a href="#" class="active">Form Tugas</a>
+          <a href="#">More</a>
+        </nav>
+      </div>
+      <div class="bottom-links">
+        <a href="#">⚙️ Settings</a>
+        <a href="#" class="logout">🔴 Logout</a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <div class="topbar">
+        <h2>SII61 – PROYEK INOVASI DIGITAL BUSINESS</h2>
+        <div class="user-profile">
+          <img src="img/mail.png" alt="Mail" />
+          <img src="img/user.png" alt="User" />
+          <span><strong>Muhammad Al Fatih</strong></span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="card">
+          <h3>LINK PENGUMPULAN TUGAS & PRESENSI MANUAL</h3>
+          <ul>
+            <li><img src="img/link.png" alt=""> Form Pengumpulan Tugas</li>
+            <li><img src="img/link.png" alt=""> Form Presensi Manual</li>
+            <li><img src="img/link.png" alt=""> Template Laporan UAS</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="info">
+          <div><strong>Support:</strong> waskita.amikom.ac.id</div>
+          <div><a href="https://waskita.amikom.ac.id">https://waskita.amikom.ac.id</a></div>
+          <div>Mobile: +6282130008668</div>
+          <div>Email: <a href="mailto:support@amikom.ac.id">support@amikom.ac.id</a></div>
+        </div>
+        <div class="social-icons">
+          <img src="img/fb.png" alt="Facebook">
+          <img src="img/ig.png" alt="Instagram">
+          <img src="img/yt.png" alt="YouTube">
+          <img src="img/wa.png" alt="WhatsApp">
+          <img src="img/tt.png" alt="TikTok">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

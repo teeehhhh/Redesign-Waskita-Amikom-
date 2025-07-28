@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard E-Learning</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* === STYLE CSS UTAMA === */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #4b0082;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      justify-content: flex-start;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+
+    .nav-menu {
+      margin-top: 0;
+      margin-bottom: 30px;
+      flex: 0 0 auto;
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .sidebar .logo img {
+      width: 60px;
+    }
+
+    .nav-menu a,
+    .bottom-nav a {
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-menu a.active,
+    .nav-menu a:hover {
+      font-weight: bold;
+      color: #ffd700;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .topbar input {
+      width: 60%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      background-color: #ccc;
+      border-radius: 50%;
+    }
+
+    .content-area {
+      display: flex;
+      gap: 20px;
+      position: relative; /* Tambahkan ini agar sticky child berfungsi */
+    }
+
+    .left-content {
+      flex: 3;
+    }
+
+    .calendar-box {
+      flex: 1;
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      height: fit-content;
+      position: sticky; /* Tambahkan ini agar calendar sticky */
+      top: 20px;        /* Jarak dari atas, sesuaikan jika perlu */
+      z-index: 2;       /* Agar di atas konten lain jika overlap */
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 20px;
+      align-items: stretch;
+    }
+
+    .semester-section {
+      display: contents;
+    }
+
+    .course-card {
+      background-color: #eee;
+      padding: 15px;
+      border-radius: 10px;
+      transition: 0.3s ease;
+    }
+     
+
+    .course-card.teal { background-color: #4db6ac; color: white; }
+    .course-card.purple { background-color: #9575cd; color: white; }
+    .course-card.pink { background-color: #f06292; color: white; }
+    .course-card.blue { background-color: #64b5f6; color: white; }
+    .course-card.lavender { background-color: #ce93d8; color: white; }
+
+    .semester-filter {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+     
+      padding: 8px 0;
+    }
+
+    .semester-filter button {
+      padding: 8px 24px;
+      border: none;
+      border-radius: 20px;
+      background-color: #4b0082;
+      color: #fff;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      letter-spacing: 0.5px;
+    }
+
+    .semester-filter button.active {
+      background-color: #ffa726;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .calendar th, .calendar td {
+      text-align: center;
+      padding: 5px;
+    }
+
+    .calendar td.active {
+      background-color: #4b0082;
+      color: white;
+      border-radius: 50%;
+    }
+
+    .main-footer {
+      background-color: #4b0082;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    .main-footer a {
+      color: white;
+      margin-left: 10px;
+    }
+
+    .course-card.custom {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 0;
+      width: 320px;
+      min-width: 220px;
+      border: 1px solid #ccc;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .course-card.custom .card-top {
+      background: #13b2a8;
+      height: 70px;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+    }
+    .course-card.custom .card-body {
+      padding: 18px 18px 10px 18px;
+      background: #fff;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      position: relative;
+    }
+    .course-card.custom .card-semester {
+      color: #888;
+      font-size: 15px;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .course-card.custom .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: #222;
+      letter-spacing: 0.5px;
+    }
+    .course-card.custom .progress-bar-bg {
+      width: 80%;
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+    .course-card.custom .progress-bar-fill {
+      height: 100%;
+      background: #1a237e;
+      width: 75%;
+      border-radius: 4px;
+      transition: width 0.4s;
+    }
+    .course-card.custom .card-progress {
+      position: static;
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #222;
+      font-weight: 400;
+      text-align: right;
+    }
+
+    .grid-divider {
+      grid-column: 1 / -1;
+      border-bottom: 2px solid #e0e0e0;
+      margin: 18px 0 8px 0;
+      height: 0;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      .content-area {
+        flex-direction: column;
+      }
+    }
+    @media (max-width: 1100px) {
+      .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 700px) {
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+   
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="asset/Logo Amikom.png" alt="Waskita Logo" />
+        <h5>WASKITA</h5>
+      </div>
+      <nav class="nav-menu">
+        <a href="#" class="active"><img src="asset/dasboard.png" alt=""> Dashboard</a>
+        <a href="#"><img src="asset/home.png" alt=""> Site Home</a>
+        <a href="#"><img src="asset/calender.png" alt=""> Calendar</a>
+        <a href="#"><img src="asset/courses.png" alt=""> My Courses</a>
+        <a href="#"><img src="asset/more.png" alt=""> More</a>
+      </nav>
+      <div class="bottom-nav">
+        <a href="#"><img src="asset/seting.png" alt=""> Settings</a>
+        <a href="index.html" class="logout"><img src="asset/log out.png" alt=""> Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="topbar">
+        <input type="text" id="search-input" placeholder="Search your course..." />
+        <div class="user-info">
+          <span><img src="asset/mail.png" alt=""></span>
+          <span><img src="asset/lonceng.png" alt=""></span>
+          <div class="user-avatar"></div>
+          <span>Muhammad Al Fatih</span>
+        </div>
+      </header>
+
+      <section class="content-area">
+        <!-- Left Content -->
+         <div class="left-content">
+
+          <h6>Recently accessed courses</h6>
+
+          <div class="course-card custom" style="width:100%; min-width:0; margin-bottom:24px;">
+
+            <div class="card-top"></div>
+
+            <div class="card-body">
+
+              <div class="card-semester">2024 – Genap</div>
+
+              <div class="card-title">SII61 – PROYEK INOVASI DIGITAL BUSINESS</div>
+
+              <div class="progress-bar-bg">
+
+                <div class="progress-bar-fill"></div>
+
+              </div>
+
+              <div class="card-progress">75% complete</div>
+
+            </div>
+
+          </div>
+
+          <div class="semester-filter">
+            <button class="active">All</button>
+            <button>Semester 1</button>
+            <button>Semester 2</button>
+            <button>Semester 3</button>
+            <button>Semester 4</button>
+            <button>Semester 5</button>
+            <button>Semester 6</button>
+          </div>
+
+          <div class="course-grid">
+            <!-- Semester 1 -->
+            <section class="semester-section" data-semester="1">
+              <h6 style="grid-column: 1 / -1; margin-bottom: 0;">Semester 1</h6>
+              <div class="course-card custom teal">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Ganjil </div>
+                  <div class="card-title">PENDIDIKAN PANCASILA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
+                  <div class="card-progress">80% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Ganjil </div>
+                  <div class="card-title">BAHASA INDONESIA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
+                  <div class="card-progress">60% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom purple">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Ganjil </div>
+                  <div class="card-title">BAHASA INGGRIS 1</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:70%"></div></div>
+                  <div class="card-progress">70% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Ganjil </div>
+                  <div class="card-title">PENDIDIKAN AGAMA ISLAM</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
+                  <div class="card-progress">90% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Ganjil </div>
+                  <div class="card-title">TECNOPRENEUR</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:50%"></div></div>
+                  <div class="card-progress">50% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Ganjil </div>
+                  <div class="card-title">LOGIKA DAN ALGORITMA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+                  <div class="card-progress">40% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Ganjil </div>
+                  <div class="card-title">PENGANTAR TEKNOLOGI INFORMASI</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:30%"></div></div>
+                  <div class="card-progress">30% complete</div>
+                </div>
+              </div>
+            </section>
+            <div class="grid-divider"></div>
+            <!-- Semester 2 -->
+            <section class="semester-section" data-semester="2">
+              <h6 style="grid-column: 1 / -1; margin-bottom: 0;">Semester 2</h6>
+              <div class="course-card custom teal">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Genap</div>
+                  <div class="card-title">BAHASA PEMROGRAMAN 1</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:70%"></div></div>
+                  <div class="card-progress">70% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom teal">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">Semester 2</div>
+                  <div class="card-title">DESIGN GRAFIS</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
+                  <div class="card-progress">60% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom teal">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Genap</div>
+                  <div class="card-title">LINGKUNGAN BISNIS</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
+                  <div class="card-progress">80% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom teal">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Genap</div>
+                  <div class="card-title">PENGENALAN PERANCANGAN WEB</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:50%"></div></div>
+                  <div class="card-progress">50% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom teal">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Genap</div>
+                  <div class="card-title">SISTEM INFORMASI MANAJEMEN</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
+                  <div class="card-progress">90% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom teal">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2022 - Genap</div>
+                  <div class="card-title">SISTEM MANAJEMEM BASIS DATA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+                  <div class="card-progress">40% complete</div>
+                </div>
+              </div>
+            </section>
+            <div class="grid-divider"></div>
+            <!-- Semester 3 -->
+            <section class="semester-section" data-semester="3">
+              <h6 style="grid-column: 1 / -1; margin-bottom: 0;">Semester 3</h6>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">BAHASA PEMROGRAMAN 2</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:50%"></div></div>
+                  <div class="card-progress">50% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">MANAJEMENT FINANSIAL</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
+                  <div class="card-progress">60% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">MANAJEMENT STRATEGIK</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:70%"></div></div>
+                  <div class="card-progress">70% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">MULTIMEDIA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
+                  <div class="card-progress">80% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">PERANCANGAN WEB LANJUT</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
+                  <div class="card-progress">90% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">SISTEM MANAJEMEN BASIS DATA KANJUT</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+                  <div class="card-progress">40% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">SISTEM OPERASI</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:30%"></div></div>
+                  <div class="card-progress">30% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">STRUKTUR DATA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:20%"></div></div>
+                  <div class="card-progress">20% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Ganjil</div>
+                  <div class="card-title">SUCCES SKILL</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:10%"></div></div>
+                  <div class="card-progress">10% complete</div>
+                </div>
+              </div>
+            </section>
+            <div class="grid-divider"></div>
+            <!-- Semester 4 -->
+            <section class="semester-section" data-semester="4">
+              <h6 style="grid-column: 1 / -1; margin-bottom: 0;">2023 - Genap</h6>
+              <div class="course-card custom blue">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Genap</div>
+                  <div class="card-title">BAHASA INGGRIS 2</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
+                  <div class="card-progress">90% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom blue">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Genap</div>
+                  <div class="card-title">CHARACTER DAN TEAMWORK BUILDING</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
+                  <div class="card-progress">80% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom blue">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Genap</div>
+                  <div class="card-title">DIGITAL BISNIS</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:70%"></div></div>
+                  <div class="card-progress">70% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom blue">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Genap</div>
+                  <div class="card-title">JARINGAN KOMPUTER</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
+                  <div class="card-progress">60% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom blue">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Genap</div>
+                  <div class="card-title">PENDIDIKAN KEWARGANEGAAAN</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:50%"></div></div>
+                  <div class="card-progress">50% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom blue">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2023 - Genap</div>
+                  <div class="card-title">STATISTIKA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+                  <div class="card-progress">40% complete</div>
+                </div>
+              </div>
+            </section>
+            <div class="grid-divider"></div>
+            <!-- Semester 5 -->
+            <section class="semester-section" data-semester="5">
+              <h6 style="grid-column: 1 / -1; margin-bottom: 0;">2024 - Genap</h6>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">Semester 5</div>
+                  <div class="card-title">KEAMANAN PERANGKAT LUNAK</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+                  <div class="card-progress">40% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">MANJEMENN PROYEK TEKNOLOGI INFORMASI</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
+                  <div class="card-progress">60% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">PEMROSESAN DAN VISUALISASI DATA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:70%"></div></div>
+                  <div class="card-progress">70% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">REKAYASA PERANGKAT LUNAK</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
+                  <div class="card-progress">80% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">SISTEM REKOMENDASI</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
+                  <div class="card-progress">90% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">TUGAS DIGITAL BUSINESS</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:50%"></div></div>
+                  <div class="card-progress">50% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">TUGAS PROYEK PRODUK KREATIF</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+                  <div class="card-progress">40% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom lavender">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">VISUALISASI DATA</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:30%"></div></div>
+                  <div class="card-progress">30% complete</div>
+                </div>
+              </div>
+            </section>
+            <div class="grid-divider"></div>
+            <!-- Semester 6 -->
+            <section class="semester-section" data-semester="6">
+              <h6 style="grid-column: 1 / -1; margin-bottom: 0;">2024 - Genap</h6>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">Semester 6</div>
+                  <div class="card-title">METODOLOGI PENELITIAN</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:30%"></div></div>
+                  <div class="card-progress">30% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+              <a href="form-tugas.html">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2025 2024 - Genap</div>
+                  <div class="card-title">PROYEK INOVASI DIGITAL BUSINESS</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+                  <div class="card-progress">40% complete</div>
+                </div>
+                </a>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">MACHINE LEARNING</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:50%"></div></div>
+                  <div class="card-progress">50% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">BLOCKCHAIN</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
+                  <div class="card-progress">60% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">INTERAKSI MANUSIA DAN KOMPUTER</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:70%"></div></div>
+                  <div class="card-progress">70% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">KEAMANAN SIBER</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
+                  <div class="card-progress">80% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">TUGAS PROYEK UI/UX</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
+                  <div class="card-progress">90% complete</div>
+                </div>
+              </div>
+              <div class="course-card custom pink">
+                <div class="card-top"></div>
+                <div class="card-body">
+                  <div class="card-semester">2024 - Genap</div>
+                  <div class="card-title">TESTING DAN IMPLEMENTASI SISTEM</div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%"></div></div>
+                  <div class="card-progress">100% complete</div>
+                </div>
+              </div>
+            </section>
+            <br>
+            <div style="background:#f5f5f5;border-radius:8px;padding:18px 24px;margin-bottom:0;">
+        <div style="font-size:15px;font-weight:500;margin-bottom:8px;">Support</div>
+        <div style="font-size:14px;margin-bottom:4px;">waskita.amikom.ac.id</div>
+        <div style="display:flex;align-items:center;font-size:14px;margin-bottom:4px;">
+          <img src="asset/mail.2.png" alt="" style="width:18px;margin-right:8px;"> <a href="https://waskita.amikom.ac.id" target="_blank" style="color:#222;text-decoration:underline;">https://waskita.amikom.ac.id</a>
+        </div>
+        <div style="display:flex;align-items:center;font-size:14px;margin-bottom:4px;">
+          <img src="asset/telp.png" alt="" style="width:18px;margin-right:8px;"> Mobile : +628213000666
+        </div>
+        <div style="display:flex;align-items:center;font-size:14px;">
+          <img src="asset/web.png" alt="" style="width:18px;margin-right:8px;"> support@amikom.ac.id
+        </div>
+      </div>
+      <div class="fgambar" style="margin-top:18px;text-align:right;">
+        <a href="#"><img src="asset/fb.png" alt="Facebook" style="width:25px;margin-right:8px; "></a>
+        <a href="#"><img src="asset/ig.png" alt="Instagram" style="width:24px;margin-right:8px;"></a>
+        <a href="#"><img src="asset/x.png" alt="Twitter" style="width:24px;margin-right:8px;"></a>
+        <a href="#"><img src="asset/yt.png" alt="YouTube" style="width:24px;margin-right:8px;"></a>
+        <a href="#"><img src="asset/wa.png" alt="WhatsApp" style="width:24px;"></a>
+      </div>
+          </div>
+
+          
+        </div>
+
+        <!-- Calendar -->
+        <aside class="calendar-box">
+          <h6 id="calendar-title">Calendar</h6>
+          <table class="calendar">
+            <thead>
+              <tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr>
+            </thead>
+            <tbody id="calendar-body">
+              <!-- Filled by JS -->
+            </tbody>
+          </table>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <!-- Footer 
+  <footer class="main-footer">
+    <div class="footer-left">
+      <p><strong>Support</strong><br>waskita.amikom.ac.id</p>
+    </div>
+    <div class="footer-right">
+      <a href="#">🌐</a>
+      <a href="#">📷</a>
+      <a href="#">📹</a>
+    </div>
+  </footer>-->
+
+  <!-- JavaScript -->
+  <script>
+    // Calendar Script
+    function generateCalendar(month, year) {
+      const today = new Date();
+      const calendarBody = document.getElementById("calendar-body");
+      const calendarTitle = document.getElementById("calendar-title");
+
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+
+      calendarBody.innerHTML = "";
+      calendarTitle.innerText = `${monthNames[month]} ${year}`;
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      let date = 1;
+      for (let i = 0; i < 6; i++) {
+        let row = document.createElement("tr");
+
+        for (let j = 0; j < 7; j++) {
+          let cell = document.createElement("td");
+          if (i === 0 && j < firstDay) {
+            cell.innerHTML = "";
+          } else if (date > daysInMonth) {
+            break;
+          } else {
+            cell.innerHTML = date;
+
+            if (
+              date === today.getDate() &&
+              year === today.getFullYear() &&
+              month === today.getMonth()
+            ) {
+              cell.classList.add("active");
+            }
+
+            date++;
+          }
+          row.appendChild(cell);
+        }
+
+        calendarBody.appendChild(row);
+      }
+    }
+
+    const now = new Date();
+    generateCalendar(now.getMonth(), now.getFullYear());
+
+    // Semester Filter Script
+    const buttons = document.querySelectorAll('.semester-filter button');
+    const courseGrid = document.querySelector('.course-grid');
+    const semesterSections = document.querySelectorAll('.semester-section');
+    const gridDividers = document.querySelectorAll('.grid-divider');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const semester = button.innerText.trim();
+
+        if (semester === 'All') {
+          semesterSections.forEach(section => section.style.display = 'contents');
+          gridDividers.forEach(divider => divider.style.display = 'block');
+        } else {
+          semesterSections.forEach(section => {
+            if (section.getAttribute('data-semester') === semester.replace('Semester ', '')) {
+              section.style.display = 'contents';
+            } else {
+              section.style.display = 'none';
+            }
+          });
+          gridDividers.forEach(divider => divider.style.display = 'none');
+        }
+      });
+    });
+
+    // Search Mata Kuliah
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      document.querySelectorAll('.course-card.custom').forEach(card => {
+        const title = card.querySelector('.card-title');
+        if (title && title.textContent.toLowerCase().includes(query)) {
+          card.style.display = '';
+        } else {
+          card.style.display = query ? 'none' : '';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Waskita</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background: url('asset/Kampus.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        display: block;
+      }
+
+      .login-container {
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+      }
+
+      .login-card {
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 30px 30px;
+        width: 300px;
+        max-width: 95vw;
+        text-align: center;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      }
+
+      .login-card img {
+        width: 70px;
+        margin-bottom: 10px;
+      }
+
+      .login-card h2 {
+        margin-bottom: 5px;
+        font-weight: 600;
+        font-size: 20px;
+      }
+
+      .login-card p {
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 14px;
+      }
+
+      .login-card input {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+
+      .login-card button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        background-color: #5b65ff;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        transition: background-color 0.3s;
+      }
+
+      .login-card button:hover {
+        background-color: #3d4af0;
+      }
+
+      .login-card .alt-button {
+        background-color: #e0e0e0;
+        color: #333;
+      }
+
+      .login-card .alt-button:hover {
+        background-color: #ccc;
+      }
+
+      .footer-blur {
+        width: 100vw;
+        min-width: 0;
+        max-width: none;
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(12px);
+        border-radius: 0 0 32px 32px;
+        margin-top: 32px;
+        box-sizing: border-box;
+      }
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 32px 8vw 32px 8vw;
+        flex-wrap: wrap;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .footer-info {
+        color: #222;
+        font-size: 16px;
+        min-width: 220px;
+      }
+      .footer-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      .footer-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+        gap: 8px;
+      }
+      .footer-icon {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 4px;
+      }
+      .footer-info a {
+        color: #222;
+        text-decoration: underline;
+        word-break: break-all;
+      }
+      .footer-social {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .footer-social a {
+        display: inline-block;
+        transition: transform 0.2s;
+      }
+      .footer-social a:hover {
+        transform: scale(1.15);
+      }
+      @media (max-width: 700px) {
+        .footer-content {
+          flex-direction: column;
+          padding: 18px 12px 18px 12px;
+        }
+        .footer-social {
+          margin-top: 18px;
+        }
+      }
+      @media (max-width: 500px) {
+        .login-card {
+          padding: 18px 8px;
+          width: 98vw;
+        }
+        .login-card img {
+          width: 48px;
+        }
+        .login-card h2 {
+          font-size: 16px;
+        }
+        .footer-content {
+          flex-direction: column;
+          padding: 12px 4vw 12px 4vw;
+        }
+        .footer-info {
+          font-size: 13px;
+        }
+      }
+      @media (max-width: 350px) {
+        .login-card {
+          padding: 8px 2px;
+          font-size: 12px;
+        }
+      }
+    </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <img src="asset/Logo Amikom.png" alt="Logo Waskita" />
+      <h2>WASKITA</h2>
+      <p>Gunakan AMIKOM ID anda</p>
+      <input type="text" placeholder="username" required />
+      <input type="password" placeholder="password" required />
+       <a href="dasboard.html">
+      <button>Log In</button>
+      </a>
+      <button class="alt-button">E-Mail AMIKOM</button>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-blur">
+      <div class="footer-content">
+        <div class="footer-info">
+          <div class="footer-title">Support</div>
+          <div>waskita.amikom.ac.id</div>
+          <div class="footer-row">
+            <span class="footer-icon">
+              <!-- envelope SVG -->
+              <img src="asset/mail.2.png" alt="">
+            <a href="https://waskita.amikom.ac.id" target="_blank">https://waskita.amikom.ac.id</a>
+          </div>
+          <div class="footer-row">
+            <span class="footer-icon">
+              <!-- phone SVG -->
+              <img src="asset/telp.png" alt="">
+            </span>
+            Mobile : +6288213000666
+          </div>
+          <div class="footer-row">
+            <span class="footer-icon">
+              <!-- globe SVG -->
+              <img src="asset/web.png" alt="">
+            </span>
+            support@amikom.ac.id
+          </div>
+        </div>
+        <div class="footer-social">
+          <a href="#" title="Facebook"><img src="asset/fb.png" alt=""></a>
+          <a href="#" title="Instagram"><img src="asset/ig.png" alt=""></a>
+          <a href="#" title="Twitter"><img src="asset/x.png" alt=""></a>
+          <a href="#" title="YouTube"><img src="asset/yt.png" alt=""></a>
+          <a href="#" title="WhatsApp"><img src="asset/wa.png" alt=""></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
