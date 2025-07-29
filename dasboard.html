@@ -298,7 +298,113 @@
         grid-template-columns: 1fr;
       }
     }
-   
+
+    /* Responsive improvements */
+    @media (max-width: 1200px) {
+      .main-content {
+        padding: 12px;
+      }
+      .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+      .calendar-box {
+        min-width: 260px;
+      }
+    }
+    @media (max-width: 900px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        position: static;
+        padding: 10px;
+        min-width: 0;
+      }
+      .main-content {
+        padding: 10px;
+      }
+      .content-area {
+        flex-direction: column;
+        gap: 0;
+      }
+      .calendar-box {
+        position: static;
+        margin-top: 24px;
+        width: 100%;
+        min-width: 0;
+      }
+      .left-content {
+        width: 100%;
+        min-width: 0;
+      }
+      .course-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .course-card.custom {
+        width: 100%;
+        min-width: 0;
+        margin-bottom: 10px;
+      }
+    }
+    @media (max-width: 600px) {
+      .sidebar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 6px;
+      }
+      .sidebar .logo img {
+        width: 38px;
+      }
+      .sidebar .logo h5 {
+        font-size: 1rem;
+      }
+      .main-content {
+        padding: 4px;
+      }
+      .topbar input {
+        width: 100%;
+        font-size: 14px;
+        padding: 7px;
+      }
+      .user-info span,
+      .user-info .user-avatar {
+        font-size: 13px;
+        width: 28px;
+        height: 28px;
+      }
+      .calendar-box {
+        padding: 8px;
+        border-radius: 8px;
+      }
+      .course-card.custom {
+        border-radius: 12px;
+        padding: 0;
+      }
+      .course-card.custom .card-top {
+        height: 40px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+      .course-card.custom .card-body {
+        padding: 10px 8px 8px 8px;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+      }
+      .semester-filter {
+        gap: 6px;
+        padding: 4px 0;
+      }
+      .semester-filter button {
+        padding: 6px 10px;
+        font-size: 12px;
+        border-radius: 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -513,7 +619,7 @@
                 <div class="card-top"></div>
                 <div class="card-body"><a  href="form-tugas.html">
                   <div class="card-semester">2023 - Ganjil</div>
-                  <div class="card-title">BAHASA PEMROGRAMAN 2</di</a>v>
+                  <div class="card-title">BAHASA PEMROGRAMAN 2</div></a>
                   <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:50%"></div></div>
                   <div class="card-progress">50% complete</div>
                 </div>
@@ -522,7 +628,7 @@
                 <div class="card-top"></div>
                 <div class="card-body"><a  href="form-tugas.html">
                   <div class="card-semester">2023 - Ganjil</div>
-                  <div class="card-title">MANAJEMENT FINANSIAL</di</a>v>
+                  <div class="card-title">MANAJEMENT FINANSIAL</div></a>
                   <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
                   <div class="card-progress">60% complete</div>
                 </div>
@@ -531,7 +637,7 @@
                 <div class="card-top"></div>
                 <div class="card-body"><a  href="form-tugas.html">
                   <div class="card-semester">2023 - Ganjil</div>
-                  <div class="card-title">MANAJEMENT STRATEGIK</di</a>v>
+                  <div class="card-title">MANAJEMENT STRATEGIK</div></a>
                   <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:70%"></div></div>
                   <div class="card-progress">70% complete</div>
                 </div>
@@ -549,7 +655,7 @@
                 <div class="card-top"></div>
                 <div class="card-body"><a  href="form-tugas.html">
                   <div class="card-semester">2023 - Ganjil</div>
-                  <div class="card-title">PERANCANGAN WEB LANJUT</</a>div>
+                  <div class="card-title">PERANCANGAN WEB LANJUT</div></a>
                   <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
                   <div class="card-progress">90% complete</div>
                 </div>
@@ -608,7 +714,7 @@
                 <div class="card-top"></div>
                 <div class="card-body"><a  href="form-tugas.html">
                   <div class="card-semester">2023 - Genap</div>
-                  <div class="card-title">CHARACTER DAN TEAMWORK B</a>UILDING</div>
+                  <div class="card-title">CHARACTER DAN TEAMWORK BUILDING</div></a>
                   <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
                   <div class="card-progress">80% complete</div>
                 </div>
@@ -874,7 +980,7 @@
       ];
 
       calendarBody.innerHTML = "";
-      calendarTitle.innerText = `${monthNames[month]} ${year}`;
+      calendarTitle.innerText = ${monthNames[month]} ${year};
 
       const firstDay = new Date(year, month, 1).getDay();
       const daysInMonth = new Date(year, month + 1, 0).getDate();
